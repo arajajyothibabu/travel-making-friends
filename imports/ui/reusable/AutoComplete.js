@@ -87,6 +87,10 @@ const styles = theme => ({
     },
     singleValue: {
         fontSize: 16,
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        width: 'calc(100% - 8px)'
     },
     placeholder: {
         position: 'absolute',
