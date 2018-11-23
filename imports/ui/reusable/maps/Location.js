@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
@@ -18,8 +20,16 @@ export default class Location extends React.Component {
     handleSelect = ({label, value}) => {
         geocodeByAddress(value)
             .then(results => getLatLng(results[0]))
-            .then(latLng => console.log('Success', latLng))
-            .catch(error => console.error('Error', error));
+            .then(latLng => {
+                const { handleChange = () => null } = this.props;
+                handleChange({
+                    name: value,
+                    position: latLng
+                });
+            })
+            .catch(error => {
+                console.error('Error', error)
+            });
     };
 
     render() {
@@ -33,6 +43,7 @@ export default class Location extends React.Component {
                     <div>
                         <Autocomplete
                             {...getInputProps()}
+                            {...this.props}
                             placeholder="Search Places..."
                             handleChange={this.handleSelect}
                             options={suggestions.map(o => ({label: o.description, value: o.description}))}
@@ -43,3 +54,8 @@ export default class Location extends React.Component {
         );
     }
 }
+
+Location.propTypes = {
+    handleChange: PropTypes.func.isRequired,
+    label: PropTypes.string
+};
