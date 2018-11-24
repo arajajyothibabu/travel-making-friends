@@ -7,6 +7,9 @@ import Grid from "@material-ui/core/Grid";
 import {withStyles} from "@material-ui/core";
 import DateTimePicker from "./reusable/DateTimePicker";
 import moment from 'moment';
+import TextField from '@material-ui/core/TextField';
+import Slider from '@material-ui/lab/Slider';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 const styles = theme => ({
     paper: {
@@ -23,7 +26,8 @@ class NewTrip extends Component {
             place: {},
             gang: [],
             notes: '',
-            time: moment()
+            time: moment(),
+            max_size: 2
         };
     }
 
@@ -39,10 +43,14 @@ class NewTrip extends Component {
         this.setState({time});
     };
 
+    handleNotes = e => {
+        this.setState({notes: e.target.value});
+    };
+
 
     render(){
         const { classes } = this.props;
-        const { time } = this.state;
+        const { time, max_size } = this.state;
         return(
             <Paper className={classes.paper}>
                 <Grid container spacing={16}>
@@ -54,6 +62,24 @@ class NewTrip extends Component {
                     </Grid>
                     <Grid xs={12} md={6} item>
                         <DateTimePicker dateTime={time} handleChange={this.handleTime}/>
+                    </Grid>
+                    <Grid xs={12} md={6} item>
+                        <TextField
+                            label="Notes"
+                            multiline
+                            rowsMax="4"
+                            value={this.state.multiline}
+                            onChange={this.handleNotes}
+                            margin="normal"
+                        />
+                    </Grid>
+                    <Grid>
+                        <Slider
+                            value={max_size}
+                            aria-labelledby="Max People"
+                            onChange={this.handleChange}
+                            thumb={<GroupAddIcon style={{ color: '#2196f3' }} />}
+                        />
                     </Grid>
                 </Grid>
             </Paper>
