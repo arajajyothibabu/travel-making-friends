@@ -9,7 +9,7 @@ import DateTimePicker from "./reusable/DateTimePicker";
 import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/lab/Slider';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import GroupIcon from '@material-ui/icons/Group';
 
 const styles = theme => ({
     paper: {
@@ -47,10 +47,14 @@ class NewTrip extends Component {
         this.setState({notes: e.target.value});
     };
 
+    handleSize = (event, max_size) => {
+        this.setState({max_size: max_size > 1 ? max_size : 2});
+    };
+
 
     render(){
         const { classes } = this.props;
-        const { time, max_size } = this.state;
+        const { time, max_size, notes } = this.state;
         return(
             <Paper className={classes.paper}>
                 <Grid container spacing={16}>
@@ -67,18 +71,22 @@ class NewTrip extends Component {
                         <TextField
                             label="Notes"
                             multiline
-                            rowsMax="4"
-                            value={this.state.multiline}
+                            rowsMax="20"
+                            value={notes}
                             onChange={this.handleNotes}
                             margin="normal"
+                            fullWidth
                         />
                     </Grid>
-                    <Grid>
+                    <Grid item xs={12} md={6}>
                         <Slider
+                            min={0}
+                            max={15}
+                            step={1}
                             value={max_size}
                             aria-labelledby="Max People"
-                            onChange={this.handleChange}
-                            thumb={<GroupAddIcon style={{ color: '#2196f3' }} />}
+                            onChange={this.handleSize}
+                            thumb={<GroupIcon />}
                         />
                     </Grid>
                 </Grid>
