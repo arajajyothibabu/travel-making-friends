@@ -7,6 +7,7 @@ import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 
 import NewTrip from "../NewTrip";
+import Hero from "./Hero";
 
 const theme = createMuiTheme({
     palette: {
@@ -25,6 +26,7 @@ export default class Container extends Component {
                 <MuiThemeProvider theme={theme}>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
                         <Header />
+                        <Hero/>
                         <NewTrip />
                     </MuiPickersUtilsProvider>
                 </MuiThemeProvider>

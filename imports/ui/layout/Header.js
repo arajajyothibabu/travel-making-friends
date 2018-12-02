@@ -85,6 +85,9 @@ const styles = theme => ({
             display: 'none',
         },
     },
+    appBar: {
+        background: 'transparent'
+    }
 });
 
 class Header extends React.Component {
