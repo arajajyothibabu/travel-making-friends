@@ -24,7 +24,7 @@ export default class Location extends React.Component {
                 const { handleChange = () => null } = this.props;
                 handleChange({
                     name: value,
-                    position: latLng
+                    pos: latLng
                 });
             })
             .catch(error => {

@@ -8,6 +8,7 @@ import MomentUtils from '@date-io/moment';
 
 import NewTrip from "../NewTrip";
 import Hero from "./Hero";
+import Trips from "../pages/Trips";
 
 const theme = createMuiTheme({
     palette: {
@@ -25,9 +26,11 @@ export default class Container extends Component {
             <Fragment>
                 <MuiThemeProvider theme={theme}>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <Header />
-                        <Hero/>
-                        <NewTrip />
+                        <div>
+                            <Header />
+                            <Hero/>
+                            <Trips/>
+                        </div>
                     </MuiPickersUtilsProvider>
                 </MuiThemeProvider>
             </Fragment>
