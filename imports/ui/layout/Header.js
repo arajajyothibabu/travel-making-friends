@@ -45,7 +45,7 @@ const styles = theme => ({
         },
     },
     appBar: {
-        background: 'transparent',
+        background: 'rgba(20, 20, 200, 0.1)',
         position: 'absolute'
     }
 });
@@ -127,7 +127,7 @@ class Header extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="sticky" color="primary" className={classes.appBar}>
+                <AppBar position="sticky" color="primary" className={classes.appBar} elevation={1}>
                     <Toolbar variant="dense">
                         {/*<IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
                             <MenuIcon />

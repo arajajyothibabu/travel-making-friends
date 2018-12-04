@@ -11,7 +11,7 @@ const styles = theme => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.35),
+        backgroundColor: fade(theme.palette.common.white, 0.45),
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
@@ -58,6 +58,7 @@ const styles = theme => ({
         },
         margin: 0,
         fontSize: 18,
+        fontWeight: 600
     },
     paper: {
         width: '100%',
