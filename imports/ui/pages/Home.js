@@ -24,7 +24,6 @@ class Home extends Component {
         const { trips } = this.props;
         return(
             <Fragment>
-                <Header />
                 <Hero/>
                 <Grid container justify="center">
                     <Grid item xs={12} sm={7} md={8} lg={7}>

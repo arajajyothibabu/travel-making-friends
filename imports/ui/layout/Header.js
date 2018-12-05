@@ -46,7 +46,7 @@ const styles = theme => ({
     },
     appBar: {
         background: 'rgba(20, 20, 200, 0.1)',
-        position: 'absolute'
+        position: 'absolute'//'fixed'
     }
 });
 

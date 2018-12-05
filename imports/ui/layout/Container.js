@@ -23,6 +23,7 @@ export default class Container extends Component {
         return(
             <MuiThemeProvider theme={theme}>
                 <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <Header />
                     {renderRoutes()}
                 </MuiPickersUtilsProvider>
             </MuiThemeProvider>
