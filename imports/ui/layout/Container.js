@@ -5,10 +5,7 @@ import red from '@material-ui/core/colors/red';
 
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
-
-import NewTrip from "../NewTrip";
-import Hero from "./Hero";
-import Trips from "../pages/Trips";
+import {renderRoutes} from "../../startup/client/routes";
 
 const theme = createMuiTheme({
     palette: {
@@ -22,18 +19,13 @@ const theme = createMuiTheme({
 export default class Container extends Component {
 
     render(){
+        const { children } = this.props;
         return(
-            <Fragment>
-                <MuiThemeProvider theme={theme}>
-                    <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <div>
-                            <Header />
-                            <Hero/>
-                            <Trips/>
-                        </div>
-                    </MuiPickersUtilsProvider>
-                </MuiThemeProvider>
-            </Fragment>
+            <MuiThemeProvider theme={theme}>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    {renderRoutes()}
+                </MuiPickersUtilsProvider>
+            </MuiThemeProvider>
         )
     }
 

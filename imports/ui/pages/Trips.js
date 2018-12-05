@@ -214,20 +214,11 @@ class Trips extends Component {
     render(){
         const { trips } = this.props;
         return(
-            <Grid container justify="center">
-                <Grid item xs={12} sm={7} md={8} lg={7}>
-                    {
-                        mock.map(trip => <Trip key={trip._id} {...this.props} trip={trip}/>)
-                    }
-                </Grid>
-                <Hidden smDown>
-                    <Grid item sm={5} md={4} lg={3}>
-                        {
-                            mock.map(trip => <Trip key={trip._id} {...this.props} trip={trip}/>)
-                        }
-                    </Grid>
-                </Hidden>
-            </Grid>
+            <div>
+                {
+                    mock.map(trip => <Trip key={trip._id} {...this.props} trip={trip}/>)
+                }
+            </div>
         )
     }
 
