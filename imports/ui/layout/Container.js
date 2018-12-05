@@ -19,7 +19,7 @@ const theme = createMuiTheme({
 export default class Container extends Component {
 
     render(){
-        const { children } = this.props;
+        const {  } = this.props;
         return(
             <MuiThemeProvider theme={theme}>
                 <MuiPickersUtilsProvider utils={MomentUtils}>

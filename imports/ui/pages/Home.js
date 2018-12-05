@@ -6,6 +6,8 @@ import Hidden from '@material-ui/core/Hidden';
 import Header from "../layout/Header";
 import Hero from "../layout/Hero";
 import Trips from "./Trips";
+import FlatDatePicker from "../reusable/FlatDatePicker";
+import moment from "moment";
 
 const styles = theme => ({
 
@@ -16,9 +18,14 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            date: moment()
         };
     }
+
+    handleDateChange = (date) => {
+        this.setState({date});
+        //TODO:
+    };
 
     render(){
         const { trips } = this.props;
@@ -31,7 +38,7 @@ class Home extends Component {
                     </Grid>
                     <Hidden smDown>
                         <Grid item sm={5} md={4} lg={3}>
-
+                            <FlatDatePicker date={this.state.date} handleUpdate={this.handleDateChange} />
                         </Grid>
                     </Hidden>
                 </Grid>
