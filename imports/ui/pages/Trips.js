@@ -85,6 +85,10 @@ const mock = [
     }
 ].map(o => ({...o, _id: '' + Math.random()}));
 
+import { withTracker } from 'meteor/react-meteor-data';
+
+import { Trips as TripsCollection } from '../../api/trips';
+
 class Trip extends Component {
 
     state = { expanded: false };
@@ -224,4 +228,10 @@ class Trips extends Component {
 
 }
 
-export default withStyles(styles, { withTheme: true })(Trips);
+const TripsWithStyles = withStyles(styles, { withTheme: true })(Trips);
+
+export default withTracker(() => {
+    return {
+        trips: TripsCollection.find({}).fetch(),
+    };
+})(TripsWithStyles);

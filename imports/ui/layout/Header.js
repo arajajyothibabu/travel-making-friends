@@ -14,6 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MessageIcon from '@material-ui/icons/Message';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Dialog from "../reusable/Dialog";
+import AccountsUIWrapper from "../reusable/AccountsUIWrapper";
 
 const styles = theme => ({
     root: {
@@ -54,10 +56,11 @@ class Header extends React.Component {
     state = {
         anchorEl: null,
         mobileMoreAnchorEl: null,
+        askAuth: false
     };
 
     handleProfileMenuOpen = event => {
-        this.setState({ anchorEl: event.currentTarget });
+        this.setState({ anchorEl: event.currentTarget, askAuth: true });
     };
 
     handleMenuClose = () => {
@@ -73,8 +76,16 @@ class Header extends React.Component {
         this.setState({ mobileMoreAnchorEl: null });
     };
 
+    handleAuthOpen = () => {
+        this.setState({askAuth: true});
+    };
+
+    handleAuthClose = () => {
+        this.setState({askAuth: false});
+    };
+
     render() {
-        const { anchorEl, mobileMoreAnchorEl } = this.state;
+        const { anchorEl, mobileMoreAnchorEl, askAuth } = this.state;
         const { classes } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -163,6 +174,16 @@ class Header extends React.Component {
                         </div>
                     </Toolbar>
                 </AppBar>
+                <Dialog
+                    open={askAuth}
+                    handleClose={this.handleAuthClose}
+                    fullWidth
+                    maxWidth="xs"
+                >
+                    <div style={{minHeight: 240, width: '100%'}}>
+                        <AccountsUIWrapper/>
+                    </div>
+                </Dialog>
                 {renderMenu}
                 {renderMobileMenu}
             </div>
