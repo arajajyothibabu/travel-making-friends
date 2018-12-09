@@ -13,6 +13,7 @@ class Dialog extends React.Component {
         const {
             fullScreen = false, open, handleClose,
             title, children, withActions = false,
+            withOk = false, withCancel = false,
             handleOk, handleCancel, okText = "Agree", cancelText = "Cancel",
             ...others
         } = this.props;
@@ -31,12 +32,8 @@ class Dialog extends React.Component {
                 </DialogContent>
                 { withActions &&
                     <DialogActions>
-                        <Button onClick={handleCancel} color="primary">
-                            {cancelText}
-                        </Button>
-                        <Button onClick={handleOk} color="primary" autoFocus>
-                            {okText}
-                        </Button>
+                        { withCancel && <Button onClick={handleCancel} color="primary">{cancelText}</Button> }
+                        { withOk && <Button onClick={handleOk} color="primary" autoFocus>{okText}</Button> }
                     </DialogActions>
                 }
             </ResponsiveDialog>
