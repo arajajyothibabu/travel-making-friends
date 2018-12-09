@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +14,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MessageIcon from '@material-ui/icons/Message';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Dialog from "../reusable/Dialog";
 import AccountsUIWrapper from "../reusable/AccountsUIWrapper";
 
@@ -60,7 +61,7 @@ class Header extends React.Component {
     };
 
     handleProfileMenuOpen = event => {
-        this.setState({ anchorEl: event.currentTarget, askAuth: true });
+        this.setState({ anchorEl: event.currentTarget });
     };
 
     handleMenuClose = () => {
@@ -86,7 +87,7 @@ class Header extends React.Component {
 
     render() {
         const { anchorEl, mobileMoreAnchorEl, askAuth } = this.state;
-        const { classes } = this.props;
+        const { classes, currentUser } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -147,31 +148,48 @@ class Header extends React.Component {
                             Travel Making Friends
                         </Typography>
                         <div className={classes.grow} />
-                        <div className={classes.sectionDesktop}>
-                            <IconButton color="inherit">
-                                <Badge badgeContent={4} color="secondary">
-                                    <MessageIcon />
-                                </Badge>
-                            </IconButton>
-                            <IconButton color="inherit">
-                                <Badge badgeContent={17} color="secondary">
-                                    <NotificationsIcon />
-                                </Badge>
-                            </IconButton>
-                            <IconButton
-                                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                                aria-haspopup="true"
-                                onClick={this.handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                        </div>
-                        <div className={classes.sectionMobile}>
-                            <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                                <MoreIcon />
-                            </IconButton>
-                        </div>
+                        { currentUser &&
+                            <Fragment>
+                                <div className={classes.sectionDesktop}>
+                                    <IconButton color="inherit">
+                                        <Badge badgeContent={4} color="secondary">
+                                            <MessageIcon />
+                                        </Badge>
+                                    </IconButton>
+                                    <IconButton color="inherit">
+                                        <Badge badgeContent={17} color="secondary">
+                                            <NotificationsIcon />
+                                        </Badge>
+                                    </IconButton>
+                                    <IconButton
+                                        aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                                        aria-haspopup="true"
+                                        onClick={this.handleProfileMenuOpen}
+                                        color="inherit"
+                                    >
+                                        <AccountCircle />
+                                    </IconButton>
+                                </div>
+                                <div className={classes.sectionMobile}>
+                                    <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+                                        <MoreIcon />
+                                    </IconButton>
+                                </div>
+                            </Fragment>
+                        }
+                        {
+                            !currentUser &&
+                                <Fragment>
+                                    <div>
+                                        <IconButton
+                                            color="inherit"
+                                            onClick={this.handleAuthOpen}
+                                        >
+                                            <ExitToAppIcon />
+                                        </IconButton>
+                                    </div>
+                                </Fragment>
+                        }
                     </Toolbar>
                 </AppBar>
                 <Dialog
@@ -179,6 +197,9 @@ class Header extends React.Component {
                     handleClose={this.handleAuthClose}
                     fullWidth
                     maxWidth="xs"
+                    withActions
+                    withCancel
+                    handleCancel={this.handleAuthClose}
                 >
                     <div style={{minHeight: 240, width: '100%'}}>
                         <AccountsUIWrapper/>
