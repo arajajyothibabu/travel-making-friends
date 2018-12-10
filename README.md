@@ -1,6 +1,6 @@
 # Travel Making Friends
 
-### An utility app to connect travel freaks around the city.
+### An utility app to connect travel freaks around the ~~city~~ world.
 
 #### Roadmap:
 - Web
