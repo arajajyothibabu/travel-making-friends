@@ -8,6 +8,7 @@ import Hero from "../layout/Hero";
 import Trips from "./Trips";
 import FlatDatePicker from "../reusable/FlatDatePicker";
 import moment from "moment";
+import TripsList from "../reusable/TripsList";
 
 const styles = theme => ({
 
@@ -34,7 +35,7 @@ class Home extends Component {
                 <Hero/>
                 <Grid container justify="center">
                     <Grid item xs={12} sm={7} md={8} lg={7}>
-                        <Trips/>
+                        <TripsList />
                     </Grid>
                     <Hidden smDown>
                         <Grid item sm={5} md={4} lg={3}>

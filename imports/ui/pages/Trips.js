@@ -223,7 +223,6 @@ class Trips extends Component {
         const { trips } = this.props;
         return(
             <Fragment>
-                <Header />
                 <Grid container justify="center">
                     <Grid item xs={12} sm={7} md={8} lg={7}>
                         <TripsList />

@@ -17,6 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Dialog from "../reusable/Dialog";
 import AccountsUIWrapper from "../reusable/AccountsUIWrapper";
+import classnames from 'classnames';
 
 const styles = theme => ({
     root: {
@@ -87,7 +88,7 @@ class Header extends React.Component {
 
     render() {
         const { anchorEl, mobileMoreAnchorEl, askAuth } = this.state;
-        const { classes, currentUser } = this.props;
+        const { classes, transparentHeader = false, currentUser } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -139,7 +140,7 @@ class Header extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="sticky" color="primary" className={classes.appBar} elevation={1}>
+                <AppBar position="sticky" color="primary" className={classnames({[classes.appBar]: transparentHeader})} elevation={1}>
                     <Toolbar variant="dense">
                         {/*<IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
                             <MenuIcon />
