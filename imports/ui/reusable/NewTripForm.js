@@ -17,7 +17,7 @@ const styles = theme => ({
     },
 });
 
-class NewTrip extends Component {
+class NewTripForm extends Component {
 
     constructor(props) {
         super(props);
@@ -96,4 +96,4 @@ class NewTrip extends Component {
 
 }
 
-export default withStyles(styles, { withTheme: true })(NewTrip);
+export default withStyles(styles, { withTheme: true })(NewTripForm);

@@ -88,6 +88,10 @@ const mock = [
 import { withTracker } from 'meteor/react-meteor-data';
 
 import { Trips as TripsCollection } from '../../api/trips';
+import Hero from "../layout/Hero";
+import NewTripForm from "../reusable/NewTripForm";
+import Header from "../layout/Header";
+import TripsList from "../reusable/TripsList";
 
 class Trip extends Component {
 
@@ -218,11 +222,19 @@ class Trips extends Component {
     render(){
         const { trips } = this.props;
         return(
-            <div>
-                {
-                    mock.map(trip => <Trip key={trip._id} {...this.props} trip={trip}/>)
-                }
-            </div>
+            <Fragment>
+                <Header />
+                <Grid container justify="center">
+                    <Grid item xs={12} sm={7} md={8} lg={7}>
+                        <TripsList />
+                    </Grid>
+                    <Hidden smDown>
+                        <Grid item sm={5} md={4} lg={3}>
+
+                        </Grid>
+                    </Hidden>
+                </Grid>
+            </Fragment>
         )
     }
 
