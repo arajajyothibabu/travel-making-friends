@@ -8,13 +8,17 @@ import Home from '../../ui/pages/Home';
 import Trips from "../../ui/pages/Trips";
 import NewTrip from "../../ui/pages/NewTrip";
 
+const withProps = (Component, routeProps = {}) => (props) => (
+    <Component {...routeProps} {...props}/>
+);
+
 export const renderRoutes = () => (
     <Router history={browserHistory}>
         <Switch>
-            <Route exact path="/" component={Home}/>
-            <Route exact path="/trips" component={Trips}/>
-            <Route exact path="/trips/new" component={NewTrip}/>
-            <Route component={Home}/>
+            <Route exact path="/" component={withProps(Home)}/>
+            <Route exact path="/trips" component={withProps(Trips)}/>
+            <Route exact path="/trips/new" component={withProps(NewTrip)}/>
+            <Route component={withProps(Home)}/>
         </Switch>
     </Router>
 );

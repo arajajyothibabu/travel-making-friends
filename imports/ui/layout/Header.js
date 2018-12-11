@@ -88,9 +88,10 @@ class Header extends React.Component {
 
     render() {
         const { anchorEl, mobileMoreAnchorEl, askAuth } = this.state;
-        const { classes, transparentHeader = false, currentUser } = this.props;
+        const { classes, currentUser } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+        const isHome = window.location.pathname === "/";
 
         const renderMenu = (
             <Menu
@@ -140,7 +141,7 @@ class Header extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="sticky" color="primary" className={classnames({[classes.appBar]: transparentHeader})} elevation={1}>
+                <AppBar position="sticky" color="primary" className={classnames({[classes.appBar]: isHome})} elevation={1}>
                     <Toolbar variant="dense">
                         {/*<IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
                             <MenuIcon />
