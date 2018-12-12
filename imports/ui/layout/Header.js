@@ -18,6 +18,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Dialog from "../reusable/Dialog";
 import AccountsUIWrapper from "../reusable/AccountsUIWrapper";
 import classnames from 'classnames';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -146,9 +147,11 @@ class Header extends React.Component {
                         {/*<IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
                             <MenuIcon />
                         </IconButton>*/}
-                        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                            Travel Making Friends
-                        </Typography>
+                        <Link to={`/`}>
+                            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                                Travel Making Friends
+                            </Typography>
+                        </Link>
                         <div className={classes.grow} />
                         { currentUser &&
                             <Fragment>
