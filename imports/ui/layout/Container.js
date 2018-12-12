@@ -5,7 +5,11 @@ import red from '@material-ui/core/colors/red';
 
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
-import {renderRoutes} from "../../startup/client/routes";
+import Switch from "../../startup/client/routes";
+import { withRouter } from 'react-router-dom';
+import { Router } from 'react-router';
+import createBrowserHistory from 'history/createBrowserHistory';
+const browserHistory = createBrowserHistory();
 
 const theme = createMuiTheme({
     palette: {
@@ -16,18 +20,30 @@ const theme = createMuiTheme({
     },
 });
 
-export default class Container extends Component {
+class Container extends Component {
 
     render(){
         const {  } = this.props;
         return(
             <MuiThemeProvider theme={theme}>
                 <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <Header />
-                    {renderRoutes()}
+                    <Header {...this.props}/>
+                    <Switch {...this.props}/>
                 </MuiPickersUtilsProvider>
             </MuiThemeProvider>
-        )
+        );
     }
 
+}
+
+const ContainerWithRouter = withRouter(Container);
+
+export default class extends Component {
+    render(){
+        return(
+            <Router history={browserHistory}>
+                <ContainerWithRouter />
+            </Router>
+        )
+    }
 }

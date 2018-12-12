@@ -6,6 +6,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import {fade} from "@material-ui/core/styles/colorManipulator";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from "@material-ui/icons/Add";
+import Tooltip from '@material-ui/core/Tooltip';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     search: {
@@ -70,7 +74,13 @@ const styles = theme => ({
             //marginLeft: theme.spacing.unit * 3,
             minHeight: 320,
         },
-    }
+        position: 'relative'
+    },
+    fab: {
+        position: 'absolute',
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 2,
+    },
 });
 
 class Hero extends Component {
@@ -110,6 +120,13 @@ class Hero extends Component {
                             </IconButton>
                         </div>
                     </form>
+                    <Link to={`/trips/new`}>
+                        <Tooltip title="New Trip" aria-label="New Trip">
+                            <Fab className={classes.fab} color="primary">
+                                <AddIcon />
+                            </Fab>
+                        </Tooltip>
+                    </Link>
                 </Paper>
             </Fragment>
         )
