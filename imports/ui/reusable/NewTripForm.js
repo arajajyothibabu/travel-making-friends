@@ -10,11 +10,35 @@ import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/lab/Slider';
 import GroupIcon from '@material-ui/icons/Group';
+import classnames from 'classnames';
+import Badge from "@material-ui/core/Badge";
+import Hidden from "@material-ui/core/Hidden";
+import LocationCity from '@material-ui/icons/LocationCity';
+import DateRangeTwoTone from '@material-ui/icons/DateRangeTwoTone';
 
 const styles = theme => ({
     paper: {
         padding: theme.spacing.unit * 2
     },
+    text: {
+
+    },
+    slider: {
+        margin: `${theme.spacing.unit * 2}px 0`,
+        paddingRight: theme.spacing.unit * 4
+    },
+    track: {
+        height: theme.spacing.unit / 2,
+    },
+    thumb: {
+        width: theme.spacing.unit * 9 / 4,
+        height: theme.spacing.unit * 9 / 4
+    },
+    showIcon: {
+        fontSize: theme.spacing.unit * 12,
+        display: 'block',
+        margin: '0 auto'
+    }
 });
 
 class NewTripForm extends Component {
@@ -27,7 +51,7 @@ class NewTripForm extends Component {
             gang: [],
             notes: '',
             time: moment(),
-            max_size: 2
+            max_size: 1
         };
     }
 
@@ -58,16 +82,24 @@ class NewTripForm extends Component {
         return(
             <Paper className={classes.paper}>
                 <Grid container spacing={16}>
-                    <Grid item xs={12} md={6}>
-                        <Location label="Trip to" handleChange={this.handlePlace}/>
+                    <Grid item xs={12}>
+                        <Location label="Where to" handleChange={this.handlePlace}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Location label="Starting from" handleChange={this.handleStart}/>
                     </Grid>
+                    <Hidden smDown>
+                        <Grid md={6} item>
+                            <LocationCity className={classes.showIcon} color="primary"/>
+                        </Grid>
+                        <Grid md={6} item>
+                            <DateRangeTwoTone className={classes.showIcon} color="error"/>
+                        </Grid>
+                    </Hidden>
                     <Grid xs={12} md={6} item>
-                        <DateTimePicker dateTime={time} handleChange={this.handleTime}/>
+                        <DateTimePicker label="Tentative Date & Time" dateTime={time} handleChange={this.handleTime}/>
                     </Grid>
-                    <Grid xs={12} md={6} item>
+                    <Grid xs={12} item>
                         <TextField
                             label="Notes"
                             multiline
@@ -78,16 +110,32 @@ class NewTripForm extends Component {
                             fullWidth
                         />
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Slider
-                            min={0}
-                            max={15}
-                            step={1}
-                            value={max_size}
-                            aria-labelledby="Max People"
-                            onChange={this.handleSize}
-                            thumb={<GroupIcon />}
-                        />
+                    <Grid item xs={12}>
+                        <Grid container>
+                            <Grid item xs={12} sm={4}>
+                                <Typography variant="h6" className={classes.text}>How many can join you ? </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm>
+                                <Slider
+                                    classes={{
+                                        root: classes.slider,
+                                        track: classes.track,
+                                        thumb: classes.thumb
+                                    }}
+                                    min={0}
+                                    max={15}
+                                    step={1}
+                                    value={max_size}
+                                    aria-labelledby="Max People"
+                                    onChange={this.handleSize}
+                                    thumb={
+                                        <Badge color="secondary" badgeContent={max_size} invisible={max_size === 0}>
+                                            <GroupIcon color="primary" />
+                                        </Badge>
+                                    }
+                                />
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Paper>
