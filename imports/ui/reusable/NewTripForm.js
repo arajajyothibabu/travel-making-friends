@@ -47,14 +47,18 @@ const styles = theme => ({
         margin: '0 auto'
     },
     toggleContainer: {
-        height: 56,
+        //height: 56,
         //padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        margin: `${theme.spacing.unit}px 0`,
+        //margin: `${theme.spacing.unit}px 0`,
         //background: theme.palette.background.default,
     },
+    formField: {
+        //padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+        margin: `${theme.spacing.unit}px 0`
+    }
 });
 
 const VEHICLES_SRC = [
@@ -128,52 +132,54 @@ class NewTripForm extends Component {
                         <DateTimePicker label="Tentative Date & Time" dateTime={time} handleChange={this.handleTime}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <Grid container>
-                            <Grid item xs={12} sm={4}>
-                                <Typography variant="subtitle1" className={classes.text}>How many can join you ? </Typography>
+                        <div className={classes.formField}>
+                            <Grid container>
+                                <Grid item xs={12} sm={4}>
+                                    <Typography variant="subtitle1" className={classes.text}>How many can join you ? </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm>
+                                    <Slider
+                                        classes={{
+                                            root: classes.slider,
+                                            track: classes.track,
+                                            thumb: classes.thumb
+                                        }}
+                                        min={0}
+                                        max={15}
+                                        step={1}
+                                        value={max_size}
+                                        aria-labelledby="Max People"
+                                        onChange={this.handleSize}
+                                        thumb={
+                                            <Badge color="secondary" badgeContent={max_size} invisible={max_size === 0}>
+                                                <GroupIcon color="primary" />
+                                            </Badge>
+                                        }
+                                    />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} sm>
-                                <Slider
-                                    classes={{
-                                        root: classes.slider,
-                                        track: classes.track,
-                                        thumb: classes.thumb
-                                    }}
-                                    min={0}
-                                    max={15}
-                                    step={1}
-                                    value={max_size}
-                                    aria-labelledby="Max People"
-                                    onChange={this.handleSize}
-                                    thumb={
-                                        <Badge color="secondary" badgeContent={max_size} invisible={max_size === 0}>
-                                            <GroupIcon color="primary" />
-                                        </Badge>
-                                    }
-                                />
-                            </Grid>
-                        </Grid>
+                        </div>
                     </Grid>
                     <Grid xs={12} item>
-                        <Grid container>
-                            <Grid item xs={12} sm={4}>
-                                <div className={classes.toggleContainer}>
+                        <div className={classes.formField}>
+                            <Grid container>
+                                <Grid item xs={12} sm={4}>
                                     <Typography variant="subtitle1" className={classes.text}>Means of transport ?</Typography>
-                                </div>
+                                </Grid>
+                                <Grid item xs={12} sm>
+                                    <div className={classes.toggleContainer}>
+                                        <ToggleButtonGroup value={vehicle} exclusive onChange={this.handleFormat}>
+                                            { VEHICLES_SRC.map(({vehicle, icon}) =>
+                                                <ToggleButton key={vehicle} value={vehicle} title={vehicle}>
+                                                    {icon}
+                                                </ToggleButton>
+                                            )
+                                            }
+                                        </ToggleButtonGroup>
+                                    </div>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} sm>
-                                <div className={classes.toggleContainer}>
-                                    <ToggleButtonGroup value={vehicle} exclusive onChange={this.handleFormat}>
-                                        { VEHICLES_SRC.map(({vehicle, icon}) =>
-                                            <ToggleButton value={vehicle} title={vehicle}>
-                                                {icon}
-                                            </ToggleButton>
-                                        )
-                                        }
-                                    </ToggleButtonGroup>
-                                </div>
-                            </Grid>
-                        </Grid>
+                        </div>
                     </Grid>
                     <Grid xs={12} item>
                         <TextField
