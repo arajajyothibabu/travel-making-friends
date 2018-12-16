@@ -1,4 +1,6 @@
 import React, {Component, Fragment} from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -15,13 +17,15 @@ import Badge from "@material-ui/core/Badge";
 import Hidden from "@material-ui/core/Hidden";
 import LocationCity from '@material-ui/icons/LocationCity';
 import DateRangeTwoTone from '@material-ui/icons/DateRangeTwoTone';
-import {VEHICLES} from "../../constants";
+import { METEOR_METHODS, VEHICLES} from "../../constants";
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Motorcycle from '@material-ui/icons/Motorcycle';
 import DirectionsCar from '@material-ui/icons/DirectionsCar';
 import DirectionsBus from '@material-ui/icons/DirectionsBus';
 import Commute from '@material-ui/icons/Commute';
+
+const { trips } = METEOR_METHODS;
 
 const styles = theme => ({
     paper: {
@@ -74,7 +78,7 @@ class NewTripForm extends Component {
         super(props);
         const {
             start = {}, place = {}, gang = [],
-            notes = '', time = moment(), max_pals = 1,
+            notes = '', time = moment().add(1, 'days'), max_pals = 1,
             vehicle = VEHICLES.TBD
         } = props;
         this.state = {
@@ -106,97 +110,123 @@ class NewTripForm extends Component {
     handleFormat = (event, vehicle) => {
         this.setState({ vehicle });
     };
+    
+    isValid = () => {
+        const { start, place, gang, notes, time, max_pals, vehicle  } = this.state;
+        const hasStart = start.name && start.name.length > 0;
+        const hasPlace = place.name && place.name.length > 0;
+        return hasStart && hasPlace; //TODO: add more validation
+    };
+
+    handleSave = (e) => {
+        e.preventDefault();
+        const trip = this.state;
+        trip.time = trip.time.toJSON();
+        Meteor.call(trips.insert, trip);
+    };
 
 
     render(){
         const { classes } = this.props;
+        console.error(this.props);
         const { time, max_pals, notes, vehicle } = this.state;
         return(
             <Paper className={classes.paper}>
-                <Grid container spacing={16}>
-                    <Grid item xs={12}>
-                        <Location label="Where to" handleChange={this.handlePlace}/>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Location label="Starting from" handleChange={this.handleStart}/>
-                    </Grid>
-                    <Hidden smDown>
-                        <Grid md={6} item>
-                            <LocationCity className={classes.showIcon} color="primary"/>
+                <form onSubmit={this.handleSave}>
+                    <Grid container spacing={16}>
+                        <Grid item xs={12}>
+                            <Location label="Where to" handleChange={this.handlePlace} />
                         </Grid>
-                        <Grid md={6} item>
-                            <DateRangeTwoTone className={classes.showIcon} color="error"/>
+                        <Grid item xs={12} md={6}>
+                            <Location label="Starting from" handleChange={this.handleStart}/>
                         </Grid>
-                    </Hidden>
-                    <Grid xs={12} md={6} item>
-                        <DateTimePicker label="Tentative Date & Time" dateTime={time} handleChange={this.handleTime}/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <div className={classes.formField}>
-                            <Grid container>
-                                <Grid item xs={12} sm={4}>
-                                    <Typography variant="subtitle1" className={classes.text}>How many can join you ? </Typography>
-                                </Grid>
-                                <Grid item xs={12} sm>
-                                    <Slider
-                                        classes={{
-                                            root: classes.slider,
-                                            track: classes.track,
-                                            thumb: classes.thumb
-                                        }}
-                                        min={0}
-                                        max={15}
-                                        step={1}
-                                        value={max_pals}
-                                        aria-labelledby="Max People"
-                                        onChange={this.handleSize}
-                                        thumb={
-                                            <Badge color="secondary" badgeContent={max_pals} invisible={max_pals === 0}>
-                                                <GroupIcon color="primary" />
-                                            </Badge>
-                                        }
-                                    />
-                                </Grid>
+                        <Hidden smDown>
+                            <Grid md={6} item>
+                                <LocationCity className={classes.showIcon} color="primary"/>
                             </Grid>
-                        </div>
-                    </Grid>
-                    <Grid xs={12} item>
-                        <div className={classes.formField}>
-                            <Grid container>
-                                <Grid item xs={12} sm={4}>
-                                    <Typography variant="subtitle1" className={classes.text}>Means of transport ?</Typography>
-                                </Grid>
-                                <Grid item xs={12} sm>
-                                    <div className={classes.toggleContainer}>
-                                        <ToggleButtonGroup value={vehicle} exclusive onChange={this.handleFormat}>
-                                            { VEHICLES_SRC.map(({vehicle, icon}) =>
-                                                <ToggleButton key={vehicle} value={vehicle} title={vehicle}>
-                                                    {icon}
-                                                </ToggleButton>
-                                            )
+                            <Grid md={6} item>
+                                <DateRangeTwoTone className={classes.showIcon} color="error"/>
+                            </Grid>
+                        </Hidden>
+                        <Grid xs={12} md={6} item>
+                            <DateTimePicker label="Tentative Date & Time" dateTime={time} handleChange={this.handleTime}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <div className={classes.formField}>
+                                <Grid container>
+                                    <Grid item xs={12} sm={4}>
+                                        <Typography variant="subtitle1" className={classes.text}>How many can join you ? </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} sm>
+                                        <Slider
+                                            classes={{
+                                                root: classes.slider,
+                                                track: classes.track,
+                                                thumb: classes.thumb
+                                            }}
+                                            min={0}
+                                            max={15}
+                                            step={1}
+                                            value={max_pals}
+                                            aria-labelledby="Max People"
+                                            onChange={this.handleSize}
+                                            thumb={
+                                                <Badge color="secondary" badgeContent={max_pals} invisible={max_pals === 0}>
+                                                    <GroupIcon color="primary" />
+                                                </Badge>
                                             }
-                                        </ToggleButtonGroup>
-                                    </div>
+                                        />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </div>
+                            </div>
+                        </Grid>
+                        <Grid xs={12} item>
+                            <div className={classes.formField}>
+                                <Grid container>
+                                    <Grid item xs={12} sm={4}>
+                                        <Typography variant="subtitle1" className={classes.text}>Means of transport ?</Typography>
+                                    </Grid>
+                                    <Grid item xs={12} sm>
+                                        <div className={classes.toggleContainer}>
+                                            <ToggleButtonGroup value={vehicle} exclusive onChange={this.handleFormat}>
+                                                { VEHICLES_SRC.map(({vehicle, icon}) =>
+                                                    <ToggleButton key={vehicle} value={vehicle} title={vehicle}>
+                                                        {icon}
+                                                    </ToggleButton>
+                                                )
+                                                }
+                                            </ToggleButtonGroup>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        </Grid>
+                        <Grid xs={12} item>
+                            <TextField
+                                label="Notes"
+                                multiline
+                                rowsMax="20"
+                                value={notes}
+                                onChange={this.handleNotes}
+                                margin="normal"
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid xs={12} item>
+                            <Button disabled={!this.isValid()} style={{float: 'right'}} variant="contained" color="primary">Create Trip</Button>
+                        </Grid>
                     </Grid>
-                    <Grid xs={12} item>
-                        <TextField
-                            label="Notes"
-                            multiline
-                            rowsMax="20"
-                            value={notes}
-                            onChange={this.handleNotes}
-                            margin="normal"
-                            fullWidth
-                        />
-                    </Grid>
-                </Grid>
+                </form>
             </Paper>
         )
     }
 
 }
 
-export default withStyles(styles, { withTheme: true })(NewTripForm);
+export default withTracker(() => {
+    return {
+        user: Meteor.user(),
+    };
+})(
+    withStyles(styles, { withTheme: true })(NewTripForm)
+);

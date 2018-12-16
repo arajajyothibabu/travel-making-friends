@@ -1,34 +1,36 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import {METEOR_METHODS} from "../constants";
 
 export const Trips = new Mongo.Collection('tasks');
 
+const { trips } = METEOR_METHODS;
+
 Meteor.methods({
-    'trips.insert'(text) {
-        check(text, String);
+    [trips.insert](trip) {
+        check(trip, Object);
 
         // Make sure the user is logged in before inserting a trip
-        if (! this.userId) {
+        if (!this.userId) {
             throw new Meteor.Error('not-authorized');
         }
 
         Trips.insert({
-            text,
+            ...trip,
             createdAt: new Date(),
-            owner: this.userId,
-            username: Meteor.users.findOne(this.userId).username,
+            user: Meteor.users.findOne(this.userId).username,
         });
     },
-    'trips.remove'(tripId) {
+    [trips.delete](tripId) {
         check(tripId, String);
 
         Trips.remove(tripId);
     },
-    'trips.setChecked'(tripId, setChecked) {
+    [trips.update](tripId, tripDetails) {
         check(tripId, String);
-        check(setChecked, Boolean);
+        check(tripDetails, Object);
 
-        Trips.update(tripId, { $set: { checked: setChecked } });
+        Trips.update(tripId, { $set: tripDetails });
     },
 });
