@@ -72,14 +72,14 @@ class NewTripForm extends Component {
 
     constructor(props) {
         super(props);
+        const {
+            start = {}, place = {}, gang = [],
+            notes = '', time = moment(), max_pals = 1,
+            vehicle = VEHICLES.TBD
+        } = props;
         this.state = {
-            start: {},
-            place: {},
-            gang: [],
-            notes: '',
-            time: moment(),
-            max_size: 1,
-            vehicle: VEHICLES.TBD
+            start, place, gang, notes,
+            time, max_pals, vehicle
         };
     }
 
@@ -99,8 +99,8 @@ class NewTripForm extends Component {
         this.setState({notes: e.target.value});
     };
 
-    handleSize = (event, max_size) => {
-        this.setState({max_size: max_size > 0 ? max_size : 1});
+    handleSize = (event, max_pals) => {
+        this.setState({max_pals: max_pals > 0 ? max_pals : 1});
     };
 
     handleFormat = (event, vehicle) => {
@@ -110,7 +110,7 @@ class NewTripForm extends Component {
 
     render(){
         const { classes } = this.props;
-        const { time, max_size, notes, vehicle } = this.state;
+        const { time, max_pals, notes, vehicle } = this.state;
         return(
             <Paper className={classes.paper}>
                 <Grid container spacing={16}>
@@ -147,11 +147,11 @@ class NewTripForm extends Component {
                                         min={0}
                                         max={15}
                                         step={1}
-                                        value={max_size}
+                                        value={max_pals}
                                         aria-labelledby="Max People"
                                         onChange={this.handleSize}
                                         thumb={
-                                            <Badge color="secondary" badgeContent={max_size} invisible={max_size === 0}>
+                                            <Badge color="secondary" badgeContent={max_pals} invisible={max_pals === 0}>
                                                 <GroupIcon color="primary" />
                                             </Badge>
                                         }
