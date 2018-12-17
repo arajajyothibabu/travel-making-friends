@@ -2,6 +2,8 @@
 
 ### An utility app to connect travel freaks around the ~~city~~ world.
 
+Powered by Meteor, MongoDB, ReactJs.
+
 #### Roadmap:
 - Web
 - Android (Hybrid)
