@@ -213,7 +213,7 @@ class NewTripForm extends Component {
                             />
                         </Grid>
                         <Grid xs={12} item>
-                            <Button disabled={!this.isValid()} style={{float: 'right'}} variant="contained" color="primary">Create Trip</Button>
+                            <Button type="submit" disabled={!this.isValid()} style={{float: 'right'}} variant="contained" color="primary">Create Trip</Button>
                         </Grid>
                     </Grid>
                 </form>

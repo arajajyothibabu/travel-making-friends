@@ -204,6 +204,7 @@ class Header extends React.Component {
                     maxWidth="xs"
                     withActions
                     withCancel
+                    cancelText="Close"
                     handleCancel={this.handleAuthClose}
                 >
                     <div style={{minHeight: 240, width: '100%'}}>

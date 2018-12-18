@@ -22,6 +22,7 @@ export default class Location extends React.Component {
             .then(results => getLatLng(results[0]))
             .then(latLng => {
                 const { handleChange = () => null } = this.props;
+                console.error('Location', value, latLng)
                 handleChange({
                     name: value,
                     pos: latLng
