@@ -25,6 +25,10 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
 
 const mock = [
     {
@@ -48,7 +52,7 @@ const mock = [
         start: {name: "Kondapur", pos: {lat: 0, long: 0}},
         gang: ["Appa Rao", "Pulla Rao"],
         notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        time: "2018-12-06T04:41:57.228Z",
+        time: "2018-12-07T04:41:57.228Z",
         max_size: 8
     },
     {
@@ -56,7 +60,7 @@ const mock = [
         start: {name: "Kothaguda", pos: {lat: 0, long: 0}},
         gang: ["Appa Rao", "Pulla Rao"],
         notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        time: "2018-12-06T04:41:57.228Z",
+        time: "2018-12-07T04:41:57.228Z",
         max_size: 10
     },
     {
@@ -64,7 +68,7 @@ const mock = [
         start: {name: "Kondapur", pos: {lat: 0, long: 0}},
         gang: ["Appa Rao", "Pulla Rao"],
         notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        time: "2018-12-06T04:41:57.228Z",
+        time: "2018-12-07T04:41:57.228Z",
         max_size: 5
     },
     {
@@ -72,7 +76,7 @@ const mock = [
         start: {name: "Kondapur", pos: {lat: 0, long: 0}},
         gang: ["Appa Rao", "Pulla Rao"],
         notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        time: "2018-12-06T04:41:57.228Z",
+        time: "2018-12-08T04:41:57.228Z",
         max_size: 3
     },
     {
@@ -80,7 +84,7 @@ const mock = [
         start: {name: "Kondapur", pos: {lat: 0, long: 0}},
         gang: ["Appa Rao", "Pulla Rao", "Ella Rao", "Anna Rao"],
         notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        time: "2018-12-06T04:41:57.228Z",
+        time: "2018-12-08T04:41:57.228Z",
         max_size: 5
     }
 ].map(o => ({...o, _id: '' + Math.random()}));
@@ -168,7 +172,7 @@ class Trip extends Component {
 
 const styles = theme => ({
     card: {
-        //maxWidth: 400,
+        width: '100%',
         padding: theme.spacing.unit * 2,
         margin: theme.spacing.unit,
         '&:hover': {
@@ -203,8 +207,32 @@ const styles = theme => ({
     avatars: {
         display: 'flex',
         justifyContent: 'flex-end'
-    }
+    },
+    root: {
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+        position: 'relative'
+    },
+    listSection: {
+        backgroundColor: 'inherit',
+    },
+    ul: {
+        backgroundColor: 'inherit',
+        padding: 0,
+    },
 });
+
+const toDatedTrips = (trips = []) => {
+    return trips.reduce((agg, trip) => {
+        const key = moment(trip.time).startOf('day');
+        if(agg.hasOwnProperty(key)){
+            agg[key].push(trip);
+        }else{
+            agg[key] = [trip];
+        }
+        return agg;
+    }, {});
+};
 
 class Trips extends Component {
 
@@ -216,12 +244,24 @@ class Trips extends Component {
     }
 
     render(){
-        const { trips } = this.props;
+        const { trips, classes } = this.props;
+        const datedTrips = toDatedTrips(mock);
         return(
             <div>
-                {
-                    mock.map(trip => <Trip key={trip._id} {...this.props} trip={trip}/>)
-                }
+                <List className={classes.root} subheader={<li />}>
+                    {Object.keys(datedTrips).map(date => (
+                        <li key={`section-${date}`} className={classes.listSection}>
+                            <ul className={classes.ul}>
+                                <ListSubheader><Typography variant="subheading">{moment(date).format("Do MMM YYYY")}</Typography></ListSubheader>
+                                {datedTrips[date].map(trip => (
+                                    <ListItem key={`item-${date}-${trip._id}`}>
+                                        <Trip key={trip._id} {...this.props} trip={trip}/>
+                                    </ListItem>
+                                ))}
+                            </ul>
+                        </li>
+                    ))}
+                </List>
             </div>
         )
     }
