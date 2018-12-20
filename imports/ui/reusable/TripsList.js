@@ -220,6 +220,9 @@ const styles = theme => ({
         backgroundColor: 'inherit',
         padding: 0,
     },
+    paper: {
+        padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
+    }
 });
 
 const toDatedTrips = (trips = []) => {
@@ -252,7 +255,11 @@ class Trips extends Component {
                     {Object.keys(datedTrips).map(date => (
                         <li key={`section-${date}`} className={classes.listSection}>
                             <ul className={classes.ul}>
-                                <ListSubheader><Typography variant="subheading">{moment(date).format("Do MMM YYYY")}</Typography></ListSubheader>
+                                <ListSubheader>
+                                    <Paper className={classes.paper}>
+                                        <Typography variant="subheading">{moment(date).format("Do MMM YYYY")}</Typography>
+                                    </Paper>
+                                </ListSubheader>
                                 {datedTrips[date].map(trip => (
                                     <ListItem key={`item-${date}-${trip._id}`}>
                                         <Trip key={trip._id} {...this.props} trip={trip}/>
