@@ -173,8 +173,8 @@ class Trip extends Component {
 const styles = theme => ({
     card: {
         width: '100%',
-        padding: theme.spacing.unit * 2,
-        margin: theme.spacing.unit,
+        padding: theme.spacing.unit,
+        //margin: theme.spacing.unit,
         '&:hover': {
             boxShadow: '0 0 3px #515151'
         },
@@ -221,7 +221,8 @@ const styles = theme => ({
         padding: 0,
     },
     paper: {
-        padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
+        padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+        background: '#8abfed59'
     }
 });
 
@@ -257,7 +258,7 @@ class Trips extends Component {
                             <ul className={classes.ul}>
                                 <ListSubheader>
                                     <Paper className={classes.paper}>
-                                        <Typography variant="subheading">{moment(date).format("Do MMM YYYY")}</Typography>
+                                        <Typography variant="subheading">{moment(date).format("Do MMM YYYY")} ({datedTrips[date].length})</Typography>
                                     </Paper>
                                 </ListSubheader>
                                 {datedTrips[date].map(trip => (
