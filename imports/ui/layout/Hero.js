@@ -10,6 +10,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
     search: {
@@ -91,8 +92,10 @@ class Hero extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        //TODO:
-        console.log(this.state.q);
+        this.props.history.push({
+            pathname: '/search',
+            search: `?q=${this.state.q}`
+        });
     };
 
     handleQuery = e => {
@@ -114,6 +117,7 @@ class Hero extends Component {
                                 }}
                                 onChange={this.handleQuery}
                                 value={this.state.q}
+                                name="q"
                             />
                             <IconButton type="submit" className={classes.searchIcon}>
                                 <SearchIcon />
@@ -134,4 +138,4 @@ class Hero extends Component {
 
 }
 
-export default withStyles(styles)(Hero);
+export default withRouter(withStyles(styles)(Hero));

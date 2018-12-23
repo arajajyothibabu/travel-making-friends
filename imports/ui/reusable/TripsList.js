@@ -222,7 +222,7 @@ const styles = theme => ({
     },
     paper: {
         padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
-        background: '#8abfed59'
+        background: 'rgba(138,191,237,0.35)'
     }
 });
 

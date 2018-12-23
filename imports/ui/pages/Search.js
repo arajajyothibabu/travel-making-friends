@@ -10,7 +10,7 @@ const styles = theme => ({
 
 });
 
-class Trips extends Component {
+class Search extends Component {
 
     constructor(props) {
         super(props);
@@ -39,7 +39,7 @@ class Trips extends Component {
 
 }
 
-const TripsWithStyles = withStyles(styles, { withTheme: true })(Trips);
+const TripsWithStyles = withStyles(styles, { withTheme: true })(Search);
 
 export default withTracker(() => {
     return {
