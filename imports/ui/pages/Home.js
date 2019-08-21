@@ -5,7 +5,6 @@ import red from '@material-ui/core/colors/red';
 import Hidden from '@material-ui/core/Hidden';
 import Header from "../layout/Header";
 import Hero from "../layout/Hero";
-import Trips from "./Trips";
 import FlatDatePicker from "../reusable/FlatDatePicker";
 import moment from "moment";
 import TripsList from "../reusable/TripsList";

@@ -76,9 +76,10 @@ class NewTripForm extends Component {
 
     constructor(props) {
         super(props);
+        const defaultStartTime = moment().add(1, 'days').startOf('day').add(9, 'hours');
         const {
             start = {}, place = {}, gang = [],
-            notes = '', time = moment().add(1, 'days'), max_pals = 1,
+            notes = '', time = defaultStartTime, max_pals = 1,
             vehicle = VEHICLES.TBD
         } = props;
         this.state = {
@@ -122,13 +123,13 @@ class NewTripForm extends Component {
         e.preventDefault();
         const trip = this.state;
         trip.time = trip.time.toJSON();
+        console.info(trip);
         Meteor.call(trips.insert, trip);
     };
 
 
     render(){
         const { classes } = this.props;
-        console.error(this.props);
         const { time, max_pals, notes, vehicle } = this.state;
         return(
             <Paper className={classes.paper}>

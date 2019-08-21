@@ -16,6 +16,8 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
+        console.error(trip);
+
         Trips.insert({
             ...trip,
             createdAt: new Date(),

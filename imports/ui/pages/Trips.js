@@ -2,8 +2,6 @@ import React, {Component, Fragment} from 'react';
 import Grid from "@material-ui/core/Grid";
 import {withStyles} from "@material-ui/core";
 import Hidden from '@material-ui/core/Hidden';
-import { withTracker } from 'meteor/react-meteor-data';
-import { Trips as TripsCollection } from '../../api/trips';
 import TripsList from "../reusable/TripsList";
 
 const styles = theme => ({
@@ -20,7 +18,7 @@ class Trips extends Component {
     }
 
     render(){
-        const { trips } = this.props;
+        const {  } = this.props;
         return(
             <Fragment>
                 <Grid container justify="center">
@@ -39,10 +37,4 @@ class Trips extends Component {
 
 }
 
-const TripsWithStyles = withStyles(styles, { withTheme: true })(Trips);
-
-export default withTracker(() => {
-    return {
-        trips: TripsCollection.find({}).fetch(),
-    };
-})(TripsWithStyles);
+export default withStyles(styles, { withTheme: true })(Trips);
