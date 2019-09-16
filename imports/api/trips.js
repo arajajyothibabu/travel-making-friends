@@ -16,9 +16,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        console.error(trip);
-
-        Trips.insert({
+        const inserted = Trips.insert({
             ...trip,
             createdAt: new Date(),
             user: Meteor.users.findOne(this.userId).username,
@@ -34,5 +32,5 @@ Meteor.methods({
         check(tripDetails, Object);
 
         Trips.update(tripId, { $set: tripDetails });
-    },
+    }
 });

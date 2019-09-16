@@ -7,8 +7,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { withTracker } from 'meteor/react-meteor-data';
+import Trip from "./TripShort";
+
 import { Trips as TripsCollection } from '../../api/trips';
-import Trip from "./Trip";
 
 const mock = [
     {
@@ -111,7 +112,7 @@ class Trips extends Component {
 
     render(){
         const { trips, classes } = this.props;
-        const datedTrips = toDatedTrips(mock);
+        const datedTrips = toDatedTrips(trips);
         return(
             <div>
                 <List className={classes.root} subheader={<li />}>

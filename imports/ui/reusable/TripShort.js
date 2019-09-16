@@ -17,7 +17,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-class Trip extends Component {
+class TripShort extends Component {
 
     state = { expanded: false };
 
@@ -134,4 +134,4 @@ const styles = theme => ({
     }
 });
 
-export default withStyles(styles, { withTheme: true })(Trip);
+export default withStyles(styles, { withTheme: true })(TripShort);
