@@ -20,10 +20,6 @@ import DateRangeTwoTone from '@material-ui/icons/DateRangeTwoTone';
 import { METEOR_METHODS, VEHICLES} from "../../constants";
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import Motorcycle from '@material-ui/icons/Motorcycle';
-import DirectionsCar from '@material-ui/icons/DirectionsCar';
-import DirectionsBus from '@material-ui/icons/DirectionsBus';
-import Commute from '@material-ui/icons/Commute';
 
 const { trips } = METEOR_METHODS;
 
@@ -64,13 +60,6 @@ const styles = theme => ({
         margin: `${theme.spacing.unit}px 0`
     }
 });
-
-const VEHICLES_SRC = [
-    { vehicle: VEHICLES.TBD, icon: <Commute/> },
-    { vehicle: VEHICLES.Bike, icon: <Motorcycle/> },
-    { vehicle: VEHICLES.Car, icon: <DirectionsCar/> },
-    { vehicle: VEHICLES.Bus, icon: <DirectionsBus/> }
-];
 
 class NewTripForm extends Component {
 
