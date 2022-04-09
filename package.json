@@ -18,7 +18,7 @@
     "history": "^4.7.2",
     "material-ui-pickers": "^2.0.2",
     "meteor-node-stubs": "^0.4.1",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
